@@ -54,14 +54,6 @@ class _DashBoardState extends State<DashBoard> {
     },
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    // Sort the list by date in descending order (latest date first)
-    mData.sort((a, b) => b["Date"].compareTo(a["Date"]));
-  }
-
-   
   // Function to group data by date
   Map<String, List<Map<String, dynamic>>> _groupDataByDate() {
     Map<String, List<Map<String, dynamic>>> groupedData = {};
@@ -78,10 +70,6 @@ class _DashBoardState extends State<DashBoard> {
     }
     return groupedData;
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
