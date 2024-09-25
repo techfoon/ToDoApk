@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // For formatting the date
+import 'package:intl/intl.dart';
+import 'package:todo/addNote.dart';
+import 'package:todo/frontpolicy.dart';
+import 'package:todo/views/profile.dart'; // For formatting the date
 
 class DashBoard extends StatefulWidget {
   @override
@@ -8,6 +11,8 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
   bool mCheckBox = false;
+
+
 
   List<Map<String, dynamic>> mData = [
     {
@@ -61,7 +66,6 @@ class _DashBoardState extends State<DashBoard> {
     mData.sort((a, b) => b["Date"].compareTo(a["Date"]));
   }
 
-   
   // Function to group data by date
   Map<String, List<Map<String, dynamic>>> _groupDataByDate() {
     Map<String, List<Map<String, dynamic>>> groupedData = {};
@@ -79,52 +83,48 @@ class _DashBoardState extends State<DashBoard> {
     return groupedData;
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     // Group the data by date
     Map<String, List<Map<String, dynamic>>> groupedData = _groupDataByDate();
 
     return Scaffold(
-      appBar:AppBar(
-          //   leading: ,
+      appBar: AppBar(
+        //   leading: ,
 
-          actions: [
-            Stack(
-              children: [
-                SizedBox(
-                  height: 60,
-                  child: IconButton(
-                      iconSize: 60,
-                      onPressed: () {},
-                      icon: Image.asset("assets/img/i/p1.png")),
+        actions: [
+          Stack(
+            children: [
+              SizedBox(
+                height: 60,
+                child: IconButton(
+                    iconSize: 60,
+                    onPressed: () {},
+                    icon: Image.asset("assets/img/i/p1.png")),
+              ),
+              Positioned(
+                top: 8,
+                right: 3,
+                child: Container(
+                  height: 16,
+                  width: 16,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.white),
+                      color: const Color.fromARGB(255, 217, 89, 80),
+                      borderRadius: BorderRadius.circular(8)),
                 ),
-                Positioned(
-                  top: 8,
-                  right: 3,
-                  child: Container(
-                    height: 16,
-                    width: 16,
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.white),
-                        color: const Color.fromARGB(255, 217, 89, 80),
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ],
-            )
-          ],
-          title: Text(
-            "MyTasks",
-            style: TextStyle(
-                fontSize: 30,
-                color: Color.fromARGB(255, 104, 5, 121),
-                fontWeight: FontWeight.bold),
-          ),
+              ),
+            ],
+          )
+        ],
+        title: Text(
+          "MyTasks",
+          style: TextStyle(
+              fontSize: 30,
+              color: Color.fromARGB(255, 104, 5, 121),
+              fontWeight: FontWeight.bold),
         ),
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
         child: ListView.builder(
@@ -175,6 +175,7 @@ class _DashBoardState extends State<DashBoard> {
                               elevation: 8,
                               child: Icon(
                                 Icons.delete,
+                                size: 50,
                               ),
                             ),
                             Icon(Icons.edit),
@@ -189,6 +190,7 @@ class _DashBoardState extends State<DashBoard> {
           },
         ),
       ),
+   
     );
   }
 }

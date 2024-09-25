@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/dashbord.dart';
 import 'package:todo/frontpolicy.dart';
+import 'package:todo/views/botton_bar.dart';
 
 void main() {
   runApp(MainClass());
@@ -11,10 +12,7 @@ class MainClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DashBoard(),
+      home: BottonBarView(),
     );
   }
 }
-
-
-
