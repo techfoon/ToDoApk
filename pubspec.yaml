@@ -38,6 +38,7 @@ flutter:
   assets:
     - assets/img/
     - assets/img/i/
+    - assets/img/icons/
  
 fonts:
   - family: PR
