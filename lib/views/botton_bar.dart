@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/addNote.dart';
+import 'package:todo/update.dart';
 import 'package:todo/dashbord.dart';
 import 'package:todo/frontpolicy.dart';
 import 'package:todo/views/profile.dart';
@@ -13,7 +13,7 @@ class _BottonBarState extends State<BottonBarView> {
   int currentIndexValue = 0;
   List screenList = [
     DashBoard(),
-    AddNote(),
+    UpdateNote(),
     Profile(),
   ];
   @override
@@ -31,10 +31,23 @@ class _BottonBarState extends State<BottonBarView> {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard), label: "DashBoard"),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: "New"),
+            if (currentIndexValue != 0)
+              BottomNavigationBarItem(icon: Icon(Icons.add), label: "old"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.settings), label: "settings"),
           ]),
+      // Conditionally display floatingActionButton based on currentIndexValue
+      floatingActionButtonLocation: currentIndexValue == 0
+          ? FloatingActionButtonLocation.centerDocked
+          : null,
+      floatingActionButton: currentIndexValue == 0
+          ? FloatingActionButton.small(
+              onPressed: () {},
+              child: Icon(
+                Icons.add,
+              ),
+            )
+          : null,
     );
   }
 }

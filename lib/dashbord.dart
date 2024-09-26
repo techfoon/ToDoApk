@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/addNote.dart';
+import 'package:todo/update.dart';
 import 'package:todo/frontpolicy.dart';
 import 'package:todo/views/profile.dart'; // For formatting the date
 
@@ -11,8 +11,6 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
   bool mCheckBox = false;
-
-
 
   List<Map<String, dynamic>> mData = [
     {
@@ -190,7 +188,7 @@ class _DashBoardState extends State<DashBoard> {
           },
         ),
       ),
-   
+     
     );
   }
 }
