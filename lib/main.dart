@@ -13,9 +13,9 @@ class MainClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-  //    home: BottonBarView(),
+      //    home: BottonBarView(),
 
-   home: UpdateNote(),
+      home: Frontpolicy(),
     );
   }
 }

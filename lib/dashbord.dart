@@ -176,7 +176,17 @@ class _DashBoardState extends State<DashBoard> {
                                 size: 50,
                               ),
                             ),
-                            Icon(Icons.edit),
+                            Card(
+                              elevation: 5,
+                              child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return UpdateNote();
+                                    }));
+                                  },
+                                  icon: Icon(Icons.edit)),
+                            )
                           ],
                         ),
                       ),
@@ -188,7 +198,6 @@ class _DashBoardState extends State<DashBoard> {
           },
         ),
       ),
-     
     );
   }
 }

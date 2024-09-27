@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo/dashbord.dart';
+import 'package:todo/views/botton_bar.dart';
 
 class Frontpolicy extends StatefulWidget {
   @override
@@ -74,7 +76,9 @@ class _FrontpolicyState extends State<Frontpolicy> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      policyRequird();
+                    },
                     child: Text(
                       "Get Started",
                       style: TextStyle(
@@ -102,5 +106,44 @@ class _FrontpolicyState extends State<Frontpolicy> {
         ],
       ),
     );
+  }
+
+  void policyRequird() {
+    if (isChecked == false) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Alert",
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+            content: Text(
+              "Please accept Our Terms&Conditions",
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                child: Text(
+                  "Okey!",
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return BottonBarView();
+      }));
+    }
   }
 }
