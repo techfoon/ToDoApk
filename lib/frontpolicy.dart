@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/dashbord.dart';
 import 'package:todo/views/botton_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Frontpolicy extends StatefulWidget {
   @override
@@ -9,6 +10,38 @@ class Frontpolicy extends StatefulWidget {
 
 class _FrontpolicyState extends State<Frontpolicy> {
   bool isChecked = false;
+  bool? isCheckedValueShared;
+
+  //setData
+  void setData() async {
+    SharedPreferences sp_isChecked = await SharedPreferences.getInstance();
+    await sp_isChecked.setBool('boolian', true);
+
+    getData();
+  }
+
+//GetData
+  void getData() async {
+    SharedPreferences sp_isChecked = await SharedPreferences.getInstance();
+
+    setState(() {
+      isCheckedValueShared = sp_isChecked.getBool('boolian');
+    });
+
+    if (isCheckedValueShared == true) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return BottonBarView();
+      }));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +141,7 @@ class _FrontpolicyState extends State<Frontpolicy> {
     );
   }
 
-  void policyRequird() {
+  void policyRequird() async {
     if (isChecked == false) {
       showDialog(
         context: context,
@@ -141,9 +174,13 @@ class _FrontpolicyState extends State<Frontpolicy> {
         },
       );
     } else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return BottonBarView();
-      }));
+      setData();
+      if (isCheckedValueShared == true) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return BottonBarView();
+        }));
+      }
     }
   }
 }
