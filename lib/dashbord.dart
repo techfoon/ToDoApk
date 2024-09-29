@@ -152,44 +152,72 @@ class _DashBoardState extends State<DashBoard> {
                     color: item["color"],
                     child: Container(
                       height: 150,
-                      child: ListTile(
-                        isThreeLine: true,
-                        leading: Checkbox(
-                          value: item["checkBox"],
-                          onChanged: (bool? value) {
-                            setState(() {
-                              item["checkBox"] = value!;
-                            });
-                          },
-                        ),
-                        title: Text(
-                          item["title"],
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        subtitle: Text(item["subtitle"]),
-                        trailing: Column(
-                          children: [
-                            Card(
-                              elevation: 8,
-                              child: Icon(
-                                Icons.delete,
-                                size: 50,
+                      child: Stack(children: [
+                        ListTile(
+                          visualDensity: VisualDensity(vertical: 4),
+                          isThreeLine: true,
+                          leading: Padding(
+                            padding: const EdgeInsets.only(top: 45),
+                            child: Transform.scale(
+                              scale: 2,
+                              child: Checkbox(
+                                value: item["checkBox"],
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    item["checkBox"] = value!;
+                                  });
+                                },
                               ),
                             ),
-                            Card(
+                          ),
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 30),
+                            child: Text(
+                              item["title"],
+                              style: TextStyle(
+                                  color: const Color.fromRGBO(255, 255, 255, 1),
+                                  fontSize: 23,
+                                  fontFamily: 'PR'),
+                            ),
+                          ),
+                          subtitle: Text(
+                            item["subtitle"],
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 206, 203, 203),
+                                fontSize: 18,
+                                fontFamily: 'PR'),
+                          ),
+                          trailing: Container(
+                            height: 160,
+                            // color: Colors.grey,
+                            child: Card(
+                                elevation: 5,
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.delete),
+                                  iconSize: 40,
+                                )),
+                          ),
+                        ),
+                        Positioned(
+                            top: 80,
+                            right: 22,
+                            child: Card(
                               elevation: 5,
                               child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return UpdateNote();
-                                    }));
-                                  },
-                                  icon: Icon(Icons.edit)),
-                            )
-                          ],
-                        ),
-                      ),
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return UpdateNote();
+                                  }));
+                                },
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 40,
+                                ),
+                              ),
+                            ))
+                      ]),
                     ),
                   );
                 }).toList(),
