@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/db/dbheaper.dart';
 import 'package:todo/update.dart';
 import 'package:todo/dashbord.dart';
 import 'package:todo/frontpolicy.dart';
@@ -16,6 +17,10 @@ class _BottonBarState extends State<BottonBarView> {
     UpdateNote(),
     Profile(),
   ];
+
+  ///Sqflite DBheaper
+  DBhelper db = DBhelper.getMyinstance();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,7 +135,9 @@ class _BottonBarState extends State<BottonBarView> {
                         borderRadius: BorderRadius.circular(50)),
                     elevation: 5,
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          db.openDB();
+                        },
                         icon: Image.asset(
                           "assets/img/icons/attached.png",
                           width: 30,
