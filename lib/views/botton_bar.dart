@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:todo/db/dbheaper.dart';
 import 'package:todo/update.dart';
@@ -11,6 +13,8 @@ class BottonBarView extends StatefulWidget {
 }
 
 class _BottonBarState extends State<BottonBarView> {
+  TextEditingController addTitleController = TextEditingController();
+  TextEditingController addDescriptionController = TextEditingController();
   int currentIndexValue = 0;
   List screenList = [
     DashBoard(),
@@ -19,7 +23,23 @@ class _BottonBarState extends State<BottonBarView> {
   ];
 
   ///Sqflite DBheaper
-  DBhelper db = DBhelper.getMyinstance();
+  DBhelper? mainDB;
+
+  List<Map<String, dynamic>> allToDo = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mainDB = DBhelper.getMyinstance();
+    BBgetInitialToDo();
+  }
+
+  BBgetInitialToDo() async {
+    allToDo = await mainDB!.getAlltodo();
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +84,6 @@ class _BottonBarState extends State<BottonBarView> {
 
 //ADD TASK PAGE BOTTOMMODELSHOW
   Widget addPageBMS() {
-    TextEditingController addTitleController = TextEditingController();
-    TextEditingController addDescriptionController = TextEditingController();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: SingleChildScrollView(
@@ -135,9 +152,7 @@ class _BottonBarState extends State<BottonBarView> {
                         borderRadius: BorderRadius.circular(50)),
                     elevation: 5,
                     child: IconButton(
-                        onPressed: () {
-                          db.openDB();
-                        },
+                        onPressed: () {},
                         icon: Image.asset(
                           "assets/img/icons/attached.png",
                           width: 30,
@@ -168,7 +183,11 @@ class _BottonBarState extends State<BottonBarView> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  todoInDB();
+                  BBgetInitialToDo();
+                  Navigator.pop(context);
+                },
                 child: Text(
                   "add Task",
                   style: TextStyle(
@@ -197,5 +216,26 @@ class _BottonBarState extends State<BottonBarView> {
         ),
       ),
     );
+  }
+
+  void todoInDB() async {
+    bool check = await mainDB!.addTodo(
+        todoTilte: addTitleController.text.toString(),
+        todoDescription: addDescriptionController.text.toString(),
+        todoDate: DateTime.now().toString(),
+        todoColor: Colors.blue.value,
+ 
+        );
+
+    if (!check) {
+      print("insertion_failed");
+      //  log("insetionfailed" );
+    } else {
+      BBgetInitialToDo();
+      print("inserted");
+      //log("inseted passed ");
+
+      BBgetInitialToDo();
+    }
   }
 }

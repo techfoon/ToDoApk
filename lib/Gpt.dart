@@ -1,63 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-void main() => runApp(Gpt());
-
-class Gpt extends StatelessWidget {
+class MyColorPicker extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
+  _MyColorPickerState createState() => _MyColorPickerState();
+}
+
+class _MyColorPickerState extends State<MyColorPicker> {
+  Color currentColor = Colors.blue;
+
+  void changeColor(Color color) {
+    setState(() => currentColor = color);
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  
-  DateTime? _selectedDate;
-  final DateFormat _dateFormatter = DateFormat('yyyy-MM-dd');
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Date Picker Example"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _selectedDate == null
-                  ? 'No date chosen!'
-                  : 'Selected date: ${_dateFormatter.format(_selectedDate!)}',
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _pickDate(context),
-              child: Text('Pick a date'),
-            ),
-          ],
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Pick a color!'),
+                content: SingleChildScrollView(
+                  child: ColorPicker(
+                    pickerColor: currentColor,
+                    onColorChanged: changeColor,
+                    showLabel: true,
+                    pickerAreaHeightPercent: 0.8,
+                    enableAlpha: true,
+                    displayThumbColor: true,
+                  // paletteType: PaletteType.circle,
+                  paletteType: PaletteType.hueWheel,
+                  ),
+                ),
+                actions: <Widget>[
+                  ElevatedButton(
+                    child: Text('Got it'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: currentColor,
+          ),
         ),
       ),
     );
-  }
-
-  Future<void> _pickDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != _selectedDate)
-      setState(() {
-        _selectedDate = picked;
-      });
   }
 }

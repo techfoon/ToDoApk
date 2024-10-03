@@ -31,9 +31,11 @@ class _MainClassState extends State<MainClass> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Frontpolicy(),
+    home: Frontpolicy(),
 
-      // home: DashBoard1(),
+    //home: MyColorPicker(),
     );
   }
 }
+
+
