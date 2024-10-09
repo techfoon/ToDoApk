@@ -186,22 +186,19 @@ class _DashBoardState extends State<DashBoard> {
 
                                       //------------------------------------------------/////  need CHECKBOX need attaendtion
                                       child: Checkbox(
-                                        value: mData[index]
-                                                [mainDB.todoCheckbox] ==
+                                        value: item[mainDB.todoCheckbox] ==
                                             1, // Convert int to bool for Checkbox
                                         onChanged: (bool? value) async {
                                           if (value != null) {
                                             // Update the database
                                             await mainDB.updateCheckBox(
                                                 cValue: value,
-                                                sNo: mData[index][mainDB
+                                                sNo: item[mainDB
                                                     .s_no]); // Pass the correct item id
 
                                             // Update the UI after the database update
                                             setState(() {
-                                              mData[index][
-                                                  mainDB
-                                                      .todoCheckbox] = value
+                                              item[mainDB.todoCheckbox] = value
                                                   ? 1
                                                   : 0; // Convert bool back to int
                                             });
@@ -241,13 +238,13 @@ class _DashBoardState extends State<DashBoard> {
                                       elevation: 5,
                                       child: IconButton(
                                         onPressed: () {
-                                           //print(item[index][mainDB.s_no].runtimeType);
+                                          //print(item[index][mainDB.s_no].runtimeType);
 
                                           mainDB.todoDelete(
-                                              Sn: item[index][mainDB.s_no]);
-
+                                              Sn: item[mainDB.s_no]);
+                                           
                                           /// smaj nahi agya
-                                        //  getInitialToDo();
+                                        getInitialToDo();
                                         },
                                         icon: Icon(Icons.delete),
                                         iconSize: 40,

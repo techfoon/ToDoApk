@@ -19,9 +19,6 @@ class MainClass extends StatefulWidget {
 
 class _MainClassState extends State<MainClass> {
 
-  
-
-
   @override
   void initState() {
     // TODO: implement initState
