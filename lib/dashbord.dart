@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/db/dbheaper.dart';
+import 'package:todo/providers/Crudprovider.dart';
 import 'package:todo/update.dart';
 import 'package:todo/frontpolicy.dart';
-import 'package:todo/views/profile.dart'; // For formatting the date
+import 'package:todo/views/profile.dart';
+
+import 'package:provider/provider.dart'; // For formatting the date
 
 class DashBoard extends StatefulWidget {
   @override
@@ -19,6 +22,8 @@ class _DashBoardState extends State<DashBoard> {
   List<Map<String, dynamic>> mData = [];
 
   DBhelper mainDB = DBhelper.getMyinstance();
+
+   
 
   /*List<Map<String, dynamic>> gmData = [
     {
@@ -103,6 +108,8 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
+
+   //  var data = Provider.of<Crudprovider>(context).getMap();
     // Group the data by date
     Map<String, List<Map<String, dynamic>>> groupedData = _groupDataByDate();
 
