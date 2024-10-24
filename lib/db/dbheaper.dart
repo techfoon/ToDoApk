@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:todo/model/crudModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
@@ -70,19 +70,20 @@ class DBhelper {
     required String todoTilte,
     required String todoDescription,
     required String todoDate,
-    required int todoColor,
+    required dynamic todoColor,
 
     /// coverted into integer
   }) async {
     var db = await getDB();
 
-    int rowsEffected = await db.insert(todoTable, {
-      todoTableTitle: todoTilte,
-      todoTableDescription: todoDescription,
-      todoTableDate: todoDate,
-      cardColor: todoColor,
-      "checkbox": 0
-    });
+    CrudModel newModel = CrudModel(
+        crudTitle: todoTilte,
+        crudDescription: todoDescription,
+        crudDate: todoDate,
+        cardColor: todoColor,
+        modelCheckbox: 0);
+
+    int rowsEffected = await db.insert(todoTable, newModel.toMap());
 
     if (rowsEffected > 0) {
       log("Data is inserted: Qurey is: $rowsEffected");
@@ -106,9 +107,6 @@ class DBhelper {
 
     log("Data is deleted: $Sn");
   }
-
-
-
 
 // update check box
 

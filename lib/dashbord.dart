@@ -23,8 +23,6 @@ class _DashBoardState extends State<DashBoard> {
 
   DBhelper mainDB = DBhelper.getMyinstance();
 
-   
-
   /*List<Map<String, dynamic>> gmData = [
     {
       "Date": DateTime(2024, 9, 23), //Format(Y, M, date)
@@ -71,9 +69,10 @@ class _DashBoardState extends State<DashBoard> {
   ];*/
 
   getInitialToDo() async {
-    mData = await mainDB.getAlltodo();
+    // mData = await mainDB.getAlltodo();
+    context.read<Crudprovider>().gettheData();
 
-    setState(() {});
+    // setState(() {});
   }
 
   @override
@@ -108,8 +107,8 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-
-   //  var data = Provider.of<Crudprovider>(context).getMap();
+    mData = context.watch<Crudprovider>().fetchMap();
+    //  var data = Provider.of<Crudprovider>(context).getMap();
     // Group the data by date
     Map<String, List<Map<String, dynamic>>> groupedData = _groupDataByDate();
 
@@ -249,9 +248,9 @@ class _DashBoardState extends State<DashBoard> {
 
                                           mainDB.todoDelete(
                                               Sn: item[mainDB.s_no]);
-                                           
+
                                           /// smaj nahi agya
-                                        getInitialToDo();
+                                          getInitialToDo();
                                         },
                                         icon: Icon(Icons.delete),
                                         iconSize: 40,

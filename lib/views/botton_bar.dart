@@ -1,7 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/db/dbheaper.dart';
+import 'package:todo/model/crudmodel.dart';
+import 'package:todo/providers/Crudprovider.dart';
 import 'package:todo/update.dart';
 import 'package:todo/dashbord.dart';
 import 'package:todo/frontpolicy.dart';
@@ -36,7 +39,9 @@ class _BottonBarState extends State<BottonBarView> {
   }
 
   BBgetInitialToDo() async {
-    allToDo = await mainDB!.getAlltodo();
+    allToDo = await context.read<Crudprovider>().fetchMap();
+ 
+
 
     setState(() {});
   }
@@ -219,23 +224,18 @@ class _BottonBarState extends State<BottonBarView> {
   }
 
   void todoInDB() async {
-    bool check = await mainDB!.addTodo(
-        todoTilte: addTitleController.text.toString(),
-        todoDescription: addDescriptionController.text.toString(),
-        todoDate: DateTime.now().toString(),
-        todoColor: Colors.blue.value,
- 
-        );
+    var mtitle = addTitleController.text.toString();
+    var mdescription = addDescriptionController.text.toString();
+    var mDate = DateTime.now().toString();
+    dynamic mcolor = Colors.blue.value;
 
-    if (!check) {
-      print("insertion_failed");
-      //  log("insetionfailed" );
-    } else {
-      BBgetInitialToDo();
-      print("inserted");
-      //log("inseted passed ");
-
-      BBgetInitialToDo();
-    }
+    Provider.of<Crudprovider>(context , listen: false).addMap(
+        newCrud: CrudModel(
+            crudTitle: mtitle,
+            crudDescription: mdescription,
+            crudDate: mDate,
+            cardColor: mcolor,
+            modelCheckbox: 0));
+    
   }
 }
